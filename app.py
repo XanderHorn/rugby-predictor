@@ -2,7 +2,6 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
-from helper_functions import update_historical_performance
 
 st.set_page_config(page_title='Rugby Predictor', page_icon='🏉', layout='wide')
 
@@ -54,7 +53,7 @@ st.sidebar.caption('Neutral ground is defined as a match played at a venue that 
 world_cup = st.sidebar.selectbox("Is World Cup Match:",['Yes','No'])
 st.sidebar.caption('Is the match part of a Rugby World Cup tournament?')
 
-st.write('Data last updated at: ', max_date)
+st.write(f'Historical match result data last updated at: {max_date}')
 st.write('#### Minutes passed:')
 st.caption('Time elapsed since the start of the match')
 time_minutes = st.slider('', min_value=0, max_value=90, value=0) // 5
@@ -154,12 +153,6 @@ with col3:
     col3.write(f'###  Match Thus Far Win Probability: {round(timeline_away_prob_win * 100, 2)}%')
     col3.caption('The likelihood of the team winning the match based on the match thus far')
     
-if st.sidebar.button('Update Historical Performance'):
-    a, date = update_historical_performance()
-
-    st.write('prior max date', date)
-    st.write('new max date', a['date'].max())
-    st.sidebar.write('Historical performance updated!')
 st.sidebar.write(' ')
 st.sidebar.write(' ')
 st.sidebar.write(' ')
