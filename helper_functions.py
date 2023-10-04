@@ -8,6 +8,36 @@ import re
 import numpy as np
 import os
 
+def update_historical_performance():
+    df = pd.read_csv('data/historical_results.csv')
+    df = df.loc[df['date'] <= '2023-10-10']
+
+    from_ts = pd.to_datetime(df['date'].max()) + timedelta(days=1)
+    matches = get_historical_matches_for_date_range(from_date = from_ts, to_date = datetime.now().strftime('%Y-%m-%d'))
+    if matches.shape[0] > 0:
+        matches = matches[['eventDateStart', 'rugbyTeam.home.name', 'rugbyTeam.away.name', 'score.total.home', 'score.total.away', 'tour.name', 'venue.venueName']]
+        matches['city'] = None
+        matches['country'] = np.where((matches['tour.name'] == 'Rugby World Cup') & (pd.to_datetime(matches['eventDateStart']).dt.year == 2023), 'France', None)
+        matches['neutral'] = np.where((matches['tour.name'] == 'Rugby World Cup') & (pd.to_datetime(matches['eventDateStart']).dt.year == 2023) & (matches['rugbyTeam.home.name'] != 'France') &  (matches['rugbyTeam.away.name'] != 'France'), True, False)
+        matches['world_cup'] = np.where((matches['tour.name'] == 'Rugby World Cup') & (pd.to_datetime(matches['eventDateStart']).dt.year == 2023), True, False)
+        matches.rename(columns = {
+            'eventDateStart': 'date',
+            'rugbyTeam.home.name': 'home_team',
+            'rugbyTeam.away.name': 'away_team',
+            'score.total.home': 'home_score',
+            'score.total.away': 'away_score',
+            'tour.name': 'competition',
+            'venue.venueName': 'stadium',
+        }, inplace = True)
+        matches['date'] = pd.to_datetime(matches['date']).dt.date
+        matches['home_team'] = np.where(matches['home_team'] == 'Springboks', 'South Africa', matches['home_team'])
+        matches['away_team'] = np.where(matches['away_team'] == 'Springboks', 'South Africa', matches['away_team'])
+        matches = matches[df.columns]
+        df = pd.concat([df, matches], axis=0)
+        df.drop_duplicates(inplace=True)
+        #df.to_csv('data/historical_results.csv', index=False)
+    return df
+
 def format_column_names(cols: list) -> list:
     new_cols = []
     for col in cols:
