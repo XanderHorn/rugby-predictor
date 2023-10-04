@@ -11,6 +11,7 @@ import os
 def update_historical_performance():
     df = pd.read_csv('data/historical_results.csv')
     df = df.loc[df['date'] <= '2023-10-10']
+    max_date = df['date'].max()
 
     from_ts = pd.to_datetime(df['date'].max()) + timedelta(days=1)
     matches = get_historical_matches_for_date_range(from_date = from_ts, to_date = datetime.now().strftime('%Y-%m-%d'))
@@ -36,7 +37,7 @@ def update_historical_performance():
         df = pd.concat([df, matches], axis=0)
         df.drop_duplicates(inplace=True)
         #df.to_csv('data/historical_results.csv', index=False)
-    return df
+    return df, max_date
 
 def format_column_names(cols: list) -> list:
     new_cols = []

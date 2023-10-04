@@ -155,7 +155,10 @@ with col3:
     col3.caption('The likelihood of the team winning the match based on the match thus far')
     
 if st.sidebar.button('Update Historical Performance'):
-    update_historical_performance(df)
+    a, date = update_historical_performance()
+
+    st.write('prior max date', date)
+    st.write('new max date', a['date'].max())
     st.sidebar.write('Historical performance updated!')
 st.sidebar.write(' ')
 st.sidebar.write(' ')
