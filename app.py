@@ -44,7 +44,7 @@ with sb_col1:
 with sb_col2:
     sb_col2.write('### VS')
 with sb_col3:
-    sb_col3.write('### Team 1:')
+    sb_col3.write('### Team 2:')
     away_team = sb_col3.selectbox("Team 2:", teams, index=1, label_visibility='hidden')
 
 
