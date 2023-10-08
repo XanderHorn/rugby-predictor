@@ -57,7 +57,7 @@ with tab1:
     st.write(f'Historical match result data last updated at: {max_date}')
     st.write('#### Minutes passed:')
     st.caption('Time elapsed since the start of the match')
-    time_minutes = st.slider('', min_value=0, max_value=90, value=0) // 5
+    time_minutes = st.slider('', min_value=0, max_value=90, value=0, step=5) // 5
 
     result = [(key, value) for key, value in team_flags.items() if key == home_team]
     home_team_flag = result[0][1]
@@ -89,30 +89,30 @@ with tab1:
     with col1:
         col1.write('##### Score')
         col1.caption('The score of the match thus far')
-        home_score = col1.slider('Team 1 Score', min_value=0, max_value=100, value=0, label_visibility='hidden')
+        home_score = col1.number_input('Team 1 Score', min_value=0, max_value=100, value=0, label_visibility='hidden')
         col1.write('##### Nr Yellow Cards')
         col1.caption('The number of yellow cards issued to the team thus far')
-        home_yellow_cards = col1.slider("Team 1 # Yellow Cards:",  min_value=0, max_value=10, value=0, label_visibility='hidden')
+        home_yellow_cards = col1.number_input("Team 1 # Yellow Cards:",  min_value=0, max_value=10, value=0, label_visibility='hidden')
         col1.write('##### Nr Red Cards')
         col1.caption('The number of red cards issued to the team thus far')
-        home_red_cards = col1.slider("Team 1# Red Cards:",  min_value=0, max_value=10, value=0, label_visibility='hidden')
+        home_red_cards = col1.number_input("Team 1# Red Cards:",  min_value=0, max_value=10, value=0, label_visibility='hidden')
         col1.write('##### Nr Substitutions')
         col1.caption('The number of subsitutions made by the team thus far (Can re-subsitute players)')
-        home_substitutions = col1.slider("Team 1# Substitutions:",  min_value=0, max_value=15, value=0, label_visibility='hidden')
+        home_substitutions = col1.number_input("Team 1# Substitutions:",  min_value=0, max_value=15, value=0, label_visibility='hidden')
 
     with col3:
         col3.write('##### Score')
         col3.caption('The score of the match thus far')
-        away_score = col3.slider('Score', min_value=0, max_value=100, value=0, label_visibility='hidden')
+        away_score = col3.number_input('Score', min_value=0, max_value=100, value=0, label_visibility='hidden')
         col3.write('##### Nr Yellow Cards')
         col3.caption('The number of yellow cards issued to the team thus far')
-        away_yellow_cards = col3.slider("# Yellow Cards:",  min_value=0, max_value=10, value=0, label_visibility='hidden')
+        away_yellow_cards = col3.number_input("# Yellow Cards:",  min_value=0, max_value=10, value=0, label_visibility='hidden')
         col3.write('##### Nr Red Cards')
         col3.caption('The number of red cards issued to the team thus far')
-        away_red_cards = col3.slider("# Red Cards:",  min_value=0, max_value=10, value=0, label_visibility='hidden')
+        away_red_cards = col3.number_input("# Red Cards:",  min_value=0, max_value=10, value=0, label_visibility='hidden')
         col3.write('##### Nr Substitutions')
         col3.caption('The number of subsitutions made by the team thus far (Can re-subsitute players)')
-        away_substitutions = col3.slider("Team 2# Substitutions:",  min_value=0, max_value=15, value=0, label_visibility='hidden')
+        away_substitutions = col3.number_input("Team 2# Substitutions:",  min_value=0, max_value=15, value=0, label_visibility='hidden')
 
     timeline_dict = {
         'time_minutes': time_minutes,
